@@ -107,7 +107,7 @@ const MicroorganismForm = ({ microorganism, onSave, onCancel }) => {
                     Categoria Taxonômica <span className="text-red-500">*</span>
                   </Label>
                   <Select 
-                    value={formData.categoriaTaxonomica} 
+                    value={formData.categoriaTaxonomica || ""} 
                     onValueChange={(value) => handleChange('categoriaTaxonomica', value)}
                   >
                     <SelectTrigger>
