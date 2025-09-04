@@ -57,7 +57,7 @@ const SearchFilter = ({ onSearch, onFilter, onClearFilters }) => {
             </div>
             
             <div className="flex flex-wrap gap-3 flex-1">
-              <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+              <Select value={selectedCategory || ""} onValueChange={handleCategoryChange}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Categoria" />
                 </SelectTrigger>
@@ -67,7 +67,7 @@ const SearchFilter = ({ onSearch, onFilter, onClearFilters }) => {
                 </SelectContent>
               </Select>
 
-              <Select value={selectedAvailability} onValueChange={handleAvailabilityChange}>
+              <Select value={selectedAvailability || ""} onValueChange={handleAvailabilityChange}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Disponibilidade" />
                 </SelectTrigger>
