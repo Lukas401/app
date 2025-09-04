@@ -225,7 +225,7 @@ const MicroorganismForm = ({ microorganism, onSave, onCancel }) => {
                 <div className="space-y-2">
                   <Label htmlFor="disponibilidade">Disponibilidade</Label>
                   <Select 
-                    value={formData.disponibilidade} 
+                    value={formData.disponibilidade || ""} 
                     onValueChange={(value) => handleChange('disponibilidade', value)}
                   >
                     <SelectTrigger>
