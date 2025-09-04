@@ -1,13 +1,17 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Header from './components/Header';
 import MicroorganismCard from './components/MicroorganismCard';
 import SearchFilter from './components/SearchFilter';
+import AdminLogin from './components/AdminLogin';
+import AdminDashboard from './components/AdminDashboard';
 import { mockMicroorganisms } from './data/mock';
 import { Toaster } from './components/ui/toaster';
+import { useState, useMemo } from 'react';
 
-const Home = () => {
+const PublicSite = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     category: '',
@@ -34,7 +38,7 @@ const Home = () => {
 
       return searchMatch && categoryMatch && availabilityMatch;
     });
-  }, [searchTerm, filters, mockMicroorganisms]);
+  }, [searchTerm, filters]);
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -113,24 +117,51 @@ const Home = () => {
       <footer className="bg-gray-800 text-white py-8 mt-12">
         <div className="container mx-auto px-4 text-center">
           <p className="text-gray-300">
-            © 2024 Banco de Microrganismos - Sistema de consulta científica
+            © 2024 MICROTECA DE SAÚDE - Universidade Federal da Bahia
           </p>
         </div>
       </footer>
-
-      <Toaster />
     </div>
+  );
+};
+
+const AppContent = () => {
+  const { isAuthenticated, loading } = useAuth();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path="/" 
+          element={<PublicSite />} 
+        />
+        <Route 
+          path="/admin" 
+          element={isAuthenticated ? <AdminDashboard /> : <AdminLogin />} 
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <AppContent />
+        <Toaster />
+      </AuthProvider>
     </div>
   );
 }
