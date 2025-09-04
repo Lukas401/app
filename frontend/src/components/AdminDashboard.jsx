@@ -334,7 +334,7 @@ const AdminDashboard = () => {
                 />
               </div>
               
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <Select value={selectedCategory || ""} onValueChange={setSelectedCategory}>
                 <SelectTrigger className="w-[200px]">
                   <SelectValue placeholder="Filtrar categoria" />
                 </SelectTrigger>
